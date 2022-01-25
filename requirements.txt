@@ -1,8 +1,6 @@
-datetime
-pandas
-matplotlib
-numpy
-sklearn.preprocessing
-streamlit
-yfinance
-seaborn
+pandas==1.3.1
+streamlit==0.60.0
+matplotlib==2.2.3 
+numpy==1.15.1
+yfinance==0.1.69
+seaborn==0.11.1

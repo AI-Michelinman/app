@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import yfinance as yf
 import seaborn as sns
-from datetime import datetime, date
 
 sns.set_context("poster", 0.5)
 st.sidebar.markdown("## Settings")
@@ -47,7 +46,6 @@ def main():
     
     st.subheader('自動車とタイヤの相関関係')
     df_corr = pd.concat([df_motor, df_tire], axis=1)
-    st.write(date.today())
     show_heatmap(df_corr)
     
     col1, col2, col3 = st.columns(3)
