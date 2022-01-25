@@ -1,29 +1,9 @@
-import poloniex
-import time
-import datetime
+
 import pandas as pd
 import matplotlib.pyplot as plt
-import japanize_matplotlib
-import numpy as np
-from binance.client import Client
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, LSTM,GRU,SimpleRNN
-from tensorflow.keras.optimizers import Nadam ,Adam
-from tensorflow.keras.callbacks import CSVLogger,EarlyStopping
-from tensorflow.keras import initializers
-import csv
-from sklearn.preprocessing import StandardScaler
-import math
-import requests
-import tweepy
-import json
-from requests_oauthlib import OAuth1Session
+
 import streamlit as st
 import yfinance as yf
-import streamlit.components.v1 as components
-from pivottablejs import pivot_ui
-import plotly.figure_factory as ff
-import plotly.graph_objects as go
 import seaborn as sns
 from datetime import datetime, date
 
@@ -72,6 +52,20 @@ def main():
     st.write(date.today())
     show_heatmap(df_corr)
     
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.header("A cat")
+        st.image("https://static.streamlit.io/examples/cat.jpg", use_column_width=True)
+    
+    with col2:
+        st.header("A dog")
+        st.image("https://static.streamlit.io/examples/dog.jpg", use_column_width=True)
+        
+    with col3:
+        st.header("An owl")
+        st.image("https://static.streamlit.io/examples/owl.jpg", use_column_width=True)
+        
 if __name__ == '__main__':
     main()
     st.sidebar.button('Reload')
