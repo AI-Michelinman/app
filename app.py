@@ -1,21 +1,30 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import japanize_matplotlib
 import streamlit as st
 import yfinance as yf
 import seaborn as sns
+import streamlit.components.v1 as stc
 
-sns.set_context("poster", 0.5)
+
+sns.set(font='IPAexGothic')
+
 st.sidebar.markdown("## Settings")
+#st.set_page_config(layout="wide")
+
     
-st.title('自動車関連株式（工事中）')
-st.header('国内')
-        
+st.title('Tatsuro note')
+st.header('自動車関連株式(海外メーカー工事中)')
+stc.html('<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8529391"><script src="https://public.flourish.studio/resources/embed.js"></script></div>',
+         height=700,width=1000)
+
 def show_heatmap(df):
     fig, ax = plt.subplots(figsize=(10,10))
     sns.heatmap(df.corr(), annot=True, ax=ax)
     st.pyplot(fig)
 
 def main():
+    
     selected_len = st.sidebar.radio('期間',
                              ['1ヶ月','1年','当会計年度','全てのデータ'])
     if selected_len == '1ヶ月':
@@ -27,41 +36,49 @@ def main():
     elif selected_len == '全てのデータ':
         selected_len = 'max'
         
+    selected_interval = st.sidebar.radio('時間足',
+                             ['1日','5日','1週間','1ヶ月', '3ヶ月'])
+    if selected_interval == '1日':
+        selected_interval = '1d'
+    elif selected_interval == '5日':
+        selected_interval = '5d'
+    elif selected_interval == '1週間':
+        selected_interval = '1wk'
+    elif selected_interval == '1ヶ月':
+        selected_interval = '1mo'
+    elif selected_interval == '3ヶ月':
+        selected_interval = '3mo'
         
-    df_motor = pd.DataFrame(yf.download(['7203.T','7201.T','7261.T','7267.T','7270.T','7269.T','7211.T'], period=selected_len, interval = "1d")["Close"])
-    df_motor.columns = ['TOYOTA','日産','マツダ','ホンダ','ＳＵＢＡＲＵ','スズキ','三菱']
+        
+    df = pd.DataFrame(yf.download(['7203.T','7201.T','7261.T','7267.T','7270.T','7269.T','7211.T',
+                                         '5108.T','5101.T','5110.T','5105.T'], period=selected_len, interval = selected_interval)["Close"])
+    df.columns = ['TOYOTA','日産','マツダ','ホンダ','ＳＵＢＡＲＵ','スズキ','三菱',
+                        'ブリヂストン','横浜ゴム','住友ゴム','TOYO TIRE']
 
-    df_tire = pd.DataFrame(yf.download(['5108.T','5101.T','5110.T','5105.T'], period=selected_len, interval = "1d")["Close"])
-    df_tire.columns = ['ブリヂストン','横浜ゴム','住友ゴム','TOYO TIRE']
-    
-    st.subheader('自動車')
-    selected_targets_motor = st.multiselect('select targets', sorted(df_motor.columns))
-    view_motor = df_motor[selected_targets_motor]
-    st.line_chart(view_motor)
+    st.subheader('銘柄')
 
-    st.subheader('タイヤ')
-    selected_targets_tire = st.multiselect('select targets', sorted(df_tire.columns))
-    view_tire = df_tire[selected_targets_tire]
-    st.line_chart(view_tire)
-    
-    st.subheader('自動車とタイヤの相関関係')
-    df_corr = pd.concat([df_motor, df_tire], axis=1)
-    show_heatmap(df_corr)
+    all = st.checkbox("Select all")
+     
+    if all:
+        selected_options = st.sidebar.multiselect('自動車メーカー', 
+             sorted(df.columns),sorted(df.columns))
+    else:
+        selected_options =  st.sidebar.multiselect('自動車メーカー', 
+            sorted(df.columns))
+    view_motor = df[selected_options]
+    st.line_chart(view_motor,width=1000)
     
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.header("A cat")
-        st.image("https://static.streamlit.io/examples/cat.jpg", use_column_width=True)
-    
+        st.header("ここ")
+
     with col2:
-        st.header("A dog")
-        st.image("https://static.streamlit.io/examples/dog.jpg", use_column_width=True)
-        
+        st.header("は")
+
     with col3:
-        st.header("An owl")
-        st.image("https://static.streamlit.io/examples/owl.jpg", use_column_width=True)
-        
+        st.header("未定")
+
 if __name__ == '__main__':
     main()
     st.sidebar.button('Reload')
