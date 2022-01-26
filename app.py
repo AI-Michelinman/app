@@ -1,18 +1,16 @@
 import streamlit as st
+import streamlit.components.v1 as stc
 import yfinance as yf
 
 st.sidebar.markdown("## Settings")    
+st.sidebar.button('Reload')
 st.title('Tatsuro note')
 st.header('自動車関連株式(海外メーカー工事中)')
-stc.html('<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8529391"><script src="https://public.flourish.studio/resources/embed.js"></script></div>',
-         height=700,width=1000)
-
-def show_heatmap(df):
-    fig, ax = plt.subplots(figsize=(10,10))
-    sns.heatmap(df.corr(), annot=True, ax=ax)
-    st.pyplot(fig)
 
 def main():
+         
+    stc.html('<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8529391"><script src="https://public.flourish.studio/resources/embed.js"></script></div>',
+         height=700,width=1000)
     
     selected_len = st.sidebar.radio('期間',
                              ['1ヶ月','1年','当会計年度','全てのデータ'])
@@ -70,4 +68,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    st.sidebar.button('Reload')
