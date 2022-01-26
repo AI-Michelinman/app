@@ -4,4 +4,4 @@ import streamlit as st
 import yfinance as yf
 import seaborn as sns
 
-st.sidebar.markdown("## Settings")
+st.title('Tatsuro note')
