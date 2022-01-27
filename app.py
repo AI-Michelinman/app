@@ -16,7 +16,7 @@ def main():
         agree = st.checkbox('投資関連')
         if agree == True :
             st.write('こんにちわ!')
-            st.header('自動車関連株式（工事中）’)
+            st.header('自動車関連株式')
             st.sidebar.markdown("## Settings")   
             stc.html('<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8529391"><script src="https://public.flourish.studio/resources/embed.js"></script></div>',height=500)
 
@@ -51,9 +51,7 @@ def main():
                                 'BS','横浜ゴム','住友ゴム','TOYO TIRE']
 
             st.subheader('銘柄')
-
             all = st.checkbox("Select all")
-            
             if all:
                 selected_options = st.sidebar.multiselect('自動車メーカー', 
                     sorted(df.columns),sorted(df.columns))
