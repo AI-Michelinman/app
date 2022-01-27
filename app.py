@@ -8,7 +8,8 @@ st.sidebar.button('Reload')
 st.title('Tatsuro note')
 st.header('自動車関連株式(海外メーカー工事中)')
 
-stc.html('<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8529391"><script src="https://public.flourish.studio/resources/embed.js"></script></div>')
+stc.html('<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8529391"><script src="https://public.flourish.studio/resources/embed.js"></script></div>'),
+         height=500)
 
 def show_heatmap(df):
     fig, ax = plt.subplots(figsize=(10,10))
